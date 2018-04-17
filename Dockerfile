@@ -3,9 +3,9 @@ WORKDIR /usr/local
 COPY node-v8.11.1-linux-x64.tar.xz ./
 RUN tar -xvf node-v8.11.1-linux-x64.tar.xz \
 	&& mv node-v8.11.1-linux-x64 node \
-	&& node -v \
-	&& npm -v \
-	&& npm config set registry https://registry.npm.taobao.org \
+	&& ./node/bin/node -v \
+	&& ./node/bin/npm -v \
+	&& ./node/bin/npm config set registry https://registry.npm.taobao.org \
 	&& mkdir -p /opt/oracle \
 	&& yum update \
 	&& yum install python gcc \
