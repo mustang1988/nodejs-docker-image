@@ -1,17 +1,17 @@
 FROM centos:latest
-
+ENV TERM dumb
 WORKDIR /usr/local
 COPY node-v8.11.1-linux-x64.tar.xz ./
 RUN tar -xvf node-v8.11.1-linux-x64.tar.xz \
 	&& rm node-v8.11.1-linux-x64.tar.xz \
-	&& mv node-v8.11.1-linux-x64 node \
+	&& mv node-v8.11.1-linux-x64 node
 ENV PATH $PATH:/usr/local/node/bin
 RUN node -v \
 	&& npm -v \
 	&& npm config set registry https://registry.npm.taobao.org \
 	&& mkdir -p /opt/oracle \
 	&& yum update \
-	&& yum install python gcc \
+	&& yum install python gcc unzip libaio -y
 WORKDIR /opt/oracle 
 COPY basic.zip ./
 COPY sdk.zip ./
