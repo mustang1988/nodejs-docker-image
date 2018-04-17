@@ -5,7 +5,7 @@ COPY node-v8.11.1-linux-x64.tar.xz ./
 RUN tar -xvf node-v8.11.1-linux-x64.tar.xz \
 	&& rm node-v8.11.1-linux-x64.tar.xz \
 	&& mv node-v8.11.1-linux-x64 node \
-ENV PATH=$PATH:/usr/local/node/bin
+ENV PATH $PATH:/usr/local/node/bin
 RUN node -v \
 	&& npm -v \
 	&& npm config set registry https://registry.npm.taobao.org \
