@@ -1,16 +1,24 @@
-FROM registry.cn-hangzhou.aliyuncs.com/mustanggu/node:8.9.1-alpine-pm2
-RUN mkdir -p /opt/oracle
+FROM centos:latest
+WORKDIR /usr/local
+COPY node-v8.11.1-linux-x64.tar.xz ./
+RUN tar -xvf node-v8.11.1-linux-x64.tar.xz \
+	&& mv node-v8.11.1-linux-x64 node \
+	&& node -v \
+	&& npm -v \
+	&& npm config set registry https://registry.npm.taobao.org \
+	&& mkdir -p /opt/oracle \
+	&& yum update \
+	&& yum install python gcc \
 WORKDIR /opt/oracle 
 COPY basic.zip ./
 COPY sdk.zip ./
-RUN apk update \
-	&& apk add --no-cache python gcc \
-	&& unzip basic.zip \
+RUN unzip basic.zip \
 	&& unzip sdk.zip \
 	&& rm basic.zip \
 	&& rm sdk.zip \
 	&& mv instantclient_12_2 instantclient \
 	&& ln -s /opt/oracle/instantclient/libclntsh.so.12.1 /opt/oracle/instantclient/libclntsh.so
+ENV PATH=$PATH:/usr/local/node/bin
 ENV LD_LIBRARY_PATH=/opt/oracle/instantclient:$LD_LIBRARY_PATH
 ENV OCI_LIB_DIR=/opt/oracle/instantclient
 ENV OCI_INC_DIR=/opt/oracle/instantclient/sdk/include
